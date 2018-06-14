@@ -6,13 +6,11 @@ exports.test = function (x) {
             else
                 reject(new Error('Error has occurred.'));
         }, 3000);
+    }).then(function (word) {
+        console.log(word);
+        return word;
+    }).catch(function (err) {
+        console.log(err);
     })
-        .then(function (word) {
-            console.log(word);
-            return word;
-        })
-        .catch(function (err) {
-            console.log(err);
-        })
 
 }

@@ -10,27 +10,33 @@ var con = mysql.createConnection({
 
 exports.get = function () {
     return new Promise(function (resolve, reject) {
-        con.query("SELECT * FROM " + process.env.DATABASE + ".contracts", function (err, result, fields) {
-            if (err) throw err;
-            resolve(result[0].firstName);
-        });
+        con.query(
+            `SELECT * FROM ${process.env.DATABASE}.contracts`
+            , function (err, result, fields) {
+                if (err) throw err;
+                resolve(result[0].firstName);
+            });
     });
 };
 
 exports.getOne = function (id) {
     return new Promise(function (resolve, reject) {
-        con.query("SELECT * FROM " + process.env.DATABASE + ".contracts WHERE id=?", [id], function (err, result, fields) {
-            if (err) throw err;
-            resolve(result);
-        });
+        con.query(
+            `SELECT * FROM ${process.env.DATABASE}.contracts 
+            WHERE id=?`
+            , [id], function (err, result, fields) {
+                if (err) throw err;
+                resolve(result);
+            });
     });
 };
 
 exports.delete = function (id) {
     return new Promise(function (resolve, reject) {
-        con.query("DELETE FROM " + process.env.DATABASE +
-            ".contracts WHERE id=?", [id],
-            function (err, result) {
+        con.query(
+            `DELETE FROM ${process.env.DATABASE}.contracts 
+            WHERE id=?`
+            , [id], function (err, result) {
                 if (err) throw err;
                 resolve(result.affectedRows + ' row(s) deleted.');
             });
@@ -39,8 +45,10 @@ exports.delete = function (id) {
 
 exports.update = function (name, id) {
     return new Promise(function (resolve, reject) {
-        con.query("UPDATE " + process.env.DATABASE +
-            ".contracts SET firstName=? WHERE id=?", [name, id],
+        con.query(
+            `UPDATE ${process.env.DATABASE}.contracts 
+            SET firstName=? WHERE id=?`
+            , [name, id],
             function (err, result) {
                 if (err) throw err;
                 resolve(result.affectedRows + ' ' + name);
@@ -50,8 +58,11 @@ exports.update = function (name, id) {
 
 exports.insert = function (firstName, vinId, ) {
     return new Promise(function (resolve, reject) {
-        con.query("INSERT INTO " + process.env.DATABASE +
-            ".contracts (firstName, vehicleId) VALUES (?,?)", [firstName, vinId],
+        con.query(
+            `INSERT INTO ${process.env.DATABASE}.contracts 
+            (firstName, vehicleId) 
+            VALUES (?,?)`
+            , [firstName, vinId],
             function (err, result) {
                 if (err) throw err;
                 resolve(result.insertId + ',' + result.affectedRows + ' ' + firstName);

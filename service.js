@@ -9,25 +9,16 @@ var con = mysql.createConnection({
 });
 
 exports.get = function () {
-    let promise = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         con.query("SELECT * FROM " + process.env.DATABASE + ".contracts", function (err, result, fields) {
             if (err) throw err;
-            resolve(result);
+            resolve(result[0].firstName);
         });
     });
-
-    return promise
-        .then(function (contracts) {
-            //console.log(data);
-            return contracts[0].firstName;
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
 };
 
 exports.test = function (x) {
-    let promise = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         setTimeout(() => {
             if (x === 1)
                 resolve('hey2');
@@ -35,14 +26,4 @@ exports.test = function (x) {
                 reject(new Error('Error has occurred.'));
         }, 3000);
     });
-
-    return promise
-        .then(function (word) {
-            // console.log(word);
-            return word;
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
-
 };
